@@ -1,0 +1,5 @@
+telebot
+pyserial
+watchdog
+plyer
+psutil
