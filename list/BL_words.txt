@@ -1,5 +1,5 @@
-wetransfer
-gmail
+wetransfer.com
+mail.google.com
 hotmail
 yahoo.com
 pastebin
