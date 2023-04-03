@@ -1,6 +1,13 @@
 wetransfer.com
 mail.google.com
-hotmail
-yahoo.com
+outlook.live.com
+mail.yahoo.com
+zoho.com/mail/
+aol.com/mail/
+gmx.com
+icloud.com/mail
+tutanota.com
+fastmail.com
+account.proton.me
 pastebin
 anonfile

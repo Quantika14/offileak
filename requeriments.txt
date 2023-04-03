@@ -3,3 +3,4 @@ pyserial
 watchdog
 plyer
 psutil
+pywin32
