@@ -12,6 +12,8 @@ Este proyecto está licenciado bajo la licencia [MIT](LICENSE).
 | Creador de consulta SQl con todas las palabras claves que se guardan en una lista      | Completada  |
 | Monitorización de carpetas      | Completada  |
 | Envio de mensajes por Telegram      | Completada  |
+| Monitorización de la red Wifi o cable      | Completada  |
+| Sistema de logs con loggins para info y errores      | Completada  |
 | Detección de conexiones USB      |  Pendiente  |
 | Frontend web      | Pendiente  |
 
