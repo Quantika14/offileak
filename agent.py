@@ -14,6 +14,8 @@ import threading
 import m.utils as utils
 import m.moni as moni
 import m.config as config
+import m.red as red
+import m.logger as log
 
 
 #********************************************************************************************************************************
@@ -114,7 +116,7 @@ def Search_ChromeHistory(username):
     conexion = sqlite3.connect(fr"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Default\History")
     cursor = conexion.cursor()
     sql_query = crear_consulta_sql("list/BL_words.txt") #Lista de palabras
-    print(sql_query)
+  
     cursor.execute(sql_query)
     resultados = cursor.fetchall()
     conexion.close()
@@ -163,14 +165,19 @@ def main():
 
     #Ruta a monitorizar
     dir_moni = config.moniDIR1
+    #Obtenemos la red a la que está conectado el ordenador
+    red_ = red.get_ssid()
 
     #Hilo1 - Navegadores
     threat1 = threading.Thread(target=search_HistoryBrowser(username, browsers))
     #Hilo2 - Monitorización de directorio
     threat2 = threading.Thread(target=moni.moniDirectory(dir_moni))
+    #Hilo3 - Monitorización de la red Wi Fi
+    threat3 = threading.Thread(target=red.moniRED(red_))
 
     threat1.start()
     threat2.start()
+    threat3.start()
 
 
 main()

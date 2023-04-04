@@ -4,3 +4,4 @@ watchdog
 plyer
 psutil
 pywin32
+wireless
